@@ -1,3 +1,22 @@
+// TODO:
+// ----------------------------------------------------
+// - MODULE: MOVE COMPARE FUNCTION TO SEPARATE FILE AND EXPORT
+// - IMPORT INTO INDEX.JS
+// - TESTING
+// - Create test strategy
+// - Create separate test-file
+// - Check Jest-documentation
+// - Document the test strategy with comments in test-code
+// - Create 2+ tests that verifies the compareFunction
+// - IF INPUT IS "CYKLA, HALLÅ", THEN OUTPUT IS EXPECTED TO BE:
+// - H / incorrect
+// - A / misplaced
+// - L / incorrect (eftersom det redan finns ett korrekt L)
+// - L / correct
+// - Å / incorrect
+// - TEST WITH SOME OTHER WORDS, E.G. CHECK "ILLER" AGAINST "HALLÅ"
+// ----------------------------------------------------
+
 // Assignment 1: Algorithm A
 // An algorithm, function(s), that defines rules for feedback when player tries to guess what the correct word is.
 
@@ -7,66 +26,45 @@
 // WHEN the user makes a guess (input)
 // THEN the user gets feedback (output) about how the guess compares to the correct answer
 
-// Input should be two words (strings)
-function compareStrings(guess, answer) {
-  // Compare guess with answer, letter by letter
-  // To check the strings, letter by letter, maybe the strings need to be split into arrays first? If not, then it might be easier anyway because the output has to be an array with objects.
-  // And store the arrays in one variable each
+function compareStrings(answer, guess) {
 
-   // Unsure of how to split them between letters though?
+  const answerArr = answer.split("");
+  const guessArr = guess.split("");
+  const output = [];
 
-  const guessArr = guess.split();
+  console.log(answerArr);
+  console.log(guessArr);
 
-  const answerArr = answer.split();
+  // The strings need to be looped through or similar i.e. with .map, forEach, for, or some string method? And for every index the value (letter) needs to be checked
+  for (let i = 0; i < guessArr.length; i++) {
+    // Letters that are same and on same position = correct
+    if(guessArr[i] === answerArr[i]){
+      output.push({"letter": guessArr[i], "result": "correct"})
 
-  // The strings need to be mapped through or similar i.e. with .map, forEach, for, or some string method?
-  guessArr.map
-  answerArr.map
+    } else if(!answerArr.includes(guessArr[i])) {
+      output.push({"letter": guessArr[i], "result": "incorrect"})
 
- // And the same index pos in both strings need to be compared with each other, if they have same letter
-
- // FOR EACH letter in guess, we actually need to do several comparisons / checks against answer
-// The games feedback rules are as follows:
-  // if the letter can be found in answer, on same place (index) = correct;
-  if (letter in guess-string = present in answer-string && same index) {
-  result = "correct";
-  }
-  // if the letter cannot be found = incorrect;
-  if (letter = !present in answer-string) {
-  result = "incorrect";
-  }
-  // if the letter can be found, but in another place / index = misplaced;
-  if (letter = present in answer string && !same index) {
-  result = "misplaced";
+      // Could just be else without if
+    } else if(guessArr[i] !== answerArr[i] && answerArr.includes(guessArr[i])) {
+      output.push({"letter": guessArr[i], "result": "misplaced"})
+    }
   }
 
-  // And somehow store result in the output array object
-  // Unsure how to store the result from comparing EACH SEPARATE LETTER, in separate output objects, in the output array
+// Problem:
+// First 'L' gives wrong result, but the problem is that it's actually right according to the rule. So, what are viable options to solve this? Can the rule be changed? Iterate through "output" array and validate the results, and correct any that are 'wrong'? Or, if we later get to the same letter, a special rule gets applied that changes earlier result of same letter?
 
-  // Output has to be an array
-  const output = [
-    // with one object for each letter in same order as guess, with the following attributes:
-    // letter: <the letter>
-    {letter: }
-    // result with one of correct, incorrect or misplaced
-    // this must be
-    {result: }
-    {}
+// for (let j = 0; j < output.length; j++) {
+//   if (output.result == "misplaced") { }
+// }
 
-    // result: incorrect, misplaced, correct
-      ]
+// if (output.result for this letter = correct && same letter occurs earlier && output.result for that letter is misplaced) <then> {change result for that letter -> incorrect}
+
+// Two passes:
+// 1st: Check for correct and move any correct to output
+// 2nd: Check for misplaced and move them, check for incorrect -> move
+
+console.log(output);
+
 }
 
 compareStrings("CYKLA", "HALLÅ");
-
-// test strategy
-// IF INPUT IS "CYKLA, HALLÅ", THEN OUTPUT IS EXPECTED TO BE:
-// H / incorrect
-// A / misplaced
-// L / incorrect (eftersom det redan finns ett korrekt L)
-// L / correct
-// Å / incorrect
-
-// create 2+ tests that verifies the function
-
-// document the test strategy with comments in test-code
